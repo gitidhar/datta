@@ -1,0 +1,1 @@
+Project for experimenting with LLMs and interactions with third party APIs (using MCP)
