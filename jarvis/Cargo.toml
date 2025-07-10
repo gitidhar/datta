@@ -4,5 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-openai_api_rust = "0.1.9"
 dotenv = "0.15.0"        # or latest
+async-openai = "0.29.0"
+tokio = { version = "1.43.0", features = ["full"] }
+anyhow       = "1"          

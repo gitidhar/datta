@@ -8,4 +8,4 @@ load_dotenv(env_path, override=False)   # override=True if you want .env to win
 
 openai_api_key = os.getenv("OPENAI_API_KEY")   # returns None if missing
 
-print("Hello world")
+print("Hello wossssrld")

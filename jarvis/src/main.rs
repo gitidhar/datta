@@ -1,11 +1,42 @@
-
-use std::env;
-use dotenv::dotenv;
-
-fn main() { 
-
+use std::error::Error;
+use anyhow::Result;                       
+use async_openai::{types::CreateCompletionRequestArgs, Client};
+use dotenv::dotenv;  
+#[tokio::main]
+async fn main() -> Result<()> {
     dotenv().ok();
-    println!("Hello Worlsssd");
-    let api_key = env::var("OPENAI_API_KEY")
-        .expect("OPENAI_API_KEY not set in .env or environment");
+    let client = Client::new();
+    // println!("Yo mama!");
+    // single
+    let request = CreateCompletionRequestArgs::default()
+        .model("gpt-3.5-turbo-instruct")
+        .prompt("Tell me a joke about the universe")
+        .max_tokens(40_u32)
+        .build()?;
+
+    let response = client.completions().create(request).await?;
+
+    println!("\nResponse (single):\n");
+    for choice in response.choices {
+        println!("{}", choice.text);
+    }
+
+    // multiple
+    let request = CreateCompletionRequestArgs::default()
+        .model("gpt-3.5-turbo-instruct")
+        .prompt([
+            "How old is the human civilization?",
+            "How far away is the moon in miles?",
+        ])
+        .max_tokens(40_u32)
+        .build()?;
+
+    let response = client.completions().create(request).await?;
+
+    println!("\nResponse (multiple):\n");
+    for choice in response.choices {
+        println!("{}", choice.text);
+    } 
+
+    Ok(())                                
 }
