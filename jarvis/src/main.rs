@@ -1,51 +1,35 @@
-use std::error::Error;
-use anyhow::Result;                       
-use async_openai::{types::CreateCompletionRequestArgs, Client};
-use dotenv::dotenv;  
+
+mod shared_types;
+use shared_types::*;
+use anyhow::Result;
+use std::io::{Read, Write};
+use serde_json::Deserializer;
 
 
 
 
-mod functions;
+fn main() -> Result<()> { 
 
-#[tokio::main] 
-async fn main() -> Result<()> { 
+    let stdin = std::io::stdin; let mut stdin_lock = stdin.lock();
+    let stdout = std::io::stdout; let mut stdout_lock = stdoutlock(); 
 
-    functions::launch_an_app();
+    loop {
+        let len = read_len (&mut stdin_lock)?;
+        if len == 0 {
+            break;
+        } 
+        let mut buf = vec![0u8; len as usize];
+        stidn_lock.read_exact(&mut buf)?;
 
-    dotenv().ok();
-    let client = Client::new();
-    // println!("Yo mama!");
-    // single
-    let request = CreateCompletionRequestArgs::default()
-        .model("gpt-4o-mini")
-        .prompt("Tell me a joke about the universe")
-        .max_tokens(40_u32)
-        .build()?;
-
-    let response = client.completions().create(request).await?;
-
-    println!("\nResponse (single):\n");
-    for choice in response.choices {
-        println!("{}", choice.text);
+        let cmd: Action = serde_json::from_slice(&buf)?;
+         // handle input somehow
+        
+        let rsp = 
     }
 
-    // // multiple
-    // let request = CreateCompletionRequestArgs::default()
-    //     .model("gpt-3.5-turbo-instruct")
-    //     .prompt([
-    //         "How old is the human civilization?",
-    //         "How far away is the moon in miles?",
-    //     ])
-    //     .max_tokens(40_u32)
-    //     .build()?;
 
-    // let response = client.completions().create(request).await?;
 
-    // println!("\nResponse (multiple):\n");
-    // for choice in response.choices {
-    //     println!("{}", choice.text);
-    // } 
 
-    Ok(())                                
+
+                            
 }

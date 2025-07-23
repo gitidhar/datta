@@ -16,7 +16,7 @@ pub fn launch_an_app() {
 // enumeration for what a command can actuall
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(tag = "type")]
-pub enum Comamnd {
+pub enum Action {
     SetValue {selector: String, value: String},
     SelectOption {selector: String, needle: String, by: SelectBy},
     Click {selector: String}, 
